@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="index.js"></script>
+    <title>WP | Performance Proposal</title>
+</head>
+<body>
+    <header> Farewell Party </header>
+
+    <ul>
+        <!-- ... (unchanged navigation bar code) ... -->
+        
+        <li><a href="/main">Home</a></li>
+        <li class="dropdown">
+          <a href="javascript:void(0)" class="dropbtn">View</a>
+          <div class="dropdown-content">
+            <a href="/vote">Vote on Menu</a>
+            <!-- <a href="/diet">Dietary Preferences</a> -->
+            <!-- <a href="/family">Family</a> -->
+            <a href="/performance">Performance Proposal</a>
+          </div>
+        </li>
+        <li><a href="/ticket">Buy Ticket</a></li>
+        <li style="float:right" class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Account</a>
+            <div class="dropdown-content">
+                <a href="/editprofile">Edit Profile</a>
+                <a href="/login">Log out</a>
+            </div>
+        </li>
+    </ul>
+
+    <!-- Performance Proposal Section -->
+    <div class="other-container">
+        <h2>Performance Volunteer:</h2>
+        <p>Propose performances for the Farewell party:</p>
+
+        <!-- Form to submit performance proposals -->
+        <form id="performanceForm">
+            <label for="performanceType">Performance Type:</label>
+            <input type="text" id="performanceType" required>
+
+            <label for="performanceDuration">Performance Duration:</label>
+            <input type="text" id="performanceDuration" required>
+
+            <label for="specialRequirements">Special Requirements:</label>
+            <textarea id="specialRequirements" rows="4" cols="50" placeholder="Type here..."></textarea>
+
+            <button type="button" class="submitbtn" onclick="submitPerformance()">Submit Proposal</button>
+        </form>
+
+        <!-- Display submitted performance proposals with voting mechanism -->
+        <div id="performanceProposals" class="menu-options"></div>
+
+        <button id="submitBtn" onclick="submitVote()">Submit Vote</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        let performanceProposals = [];
+
+        function submitPerformance() {
+            const type = document.getElementById('performanceType').value.trim();
+            const duration = document.getElementById('performanceDuration').value.trim();
+            const requirements = document.getElementById('specialRequirements').value.trim();
+
+            if (type !== '' && duration !== '') {
+                performanceProposals.push({
+                    type: type,
+                    duration: duration,
+                    requirements: requirements,
+                    votes: 0
+                });
+
+                updatePerformanceProposals();
+                clearForm();
+            }
+        }
+
+        function voteForPerformance(index) {
+            performanceProposals[index].votes++;
+            updatePerformanceProposals();
+        }
+
+        function updatePerformanceProposals() {
+            const proposalsContainer = document.getElementById('performanceProposals');
+            proposalsContainer.innerHTML = '';
+
+            performanceProposals.forEach((proposal, index) => {
+                const proposalElement = document.createElement('div');
+                proposalElement.className = 'suggested-item';
+                proposalElement.innerHTML = `
+                    <p>Type: ${proposal.type}</p>
+                    <p>Duration: ${proposal.duration}</p>
+                    <p>Special Requirements: ${proposal.requirements}</p>
+                    <button onclick="voteForPerformance(${index})">Vote</button>
+                    <p class="vote-count">${proposal.votes} Votes</p>
+                `;
+                proposalsContainer.appendChild(proposalElement);
+            });
+        }
+
+        function clearForm() {
+            document.getElementById('performanceType').value = '';
+            document.getElementById('performanceDuration').value = '';
+            document.getElementById('specialRequirements').value = '';
+        }
+    </script>
+</body>
+</html>
+
+<style>
+    /* Header styles */
+    header {
+        background-color: rgb(89, 5, 5);
+        text-align: center;
+        padding: 30px;
+        font-size: xx-large;
+        font-weight: bolder;
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: rgb(128, 8, 8);
+        font-family: Arial, sans-serif;
+    } 
+    
+
+    /* Navigation Bar */
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: rgb(147, 56, 56);
+    }
+
+    li {
+        float: left;
+    }
+
+    li a, .dropbtn {
+        display: inline-block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover, .dropdown:hover .dropbtn {
+        background-color: #555;
+    }
+
+    li.dropdown {
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    /* Performance Proposal styles */
+    .other-container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: rgb(247, 188, 179);
+        text-align: center;
+    }
+
+    #otherInput {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .submitbtn {
+        padding: 12px;
+        background-color: rgb(128, 8, 8);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+    }
+
+    .submitbtn:hover {
+        background-color: rgb(108, 7, 7);
+    }
+</style>

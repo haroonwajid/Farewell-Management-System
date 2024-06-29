@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="index.js"></script>
+    <title>WP | Register</title>
+</head>
+<body>
+    <!-- Header -->
+    <header> Farewell Party </header>
+    <!-- Registration Form -->
+    <form id="registrationForm" action="/register" method="post">
+        <div class="container">
+            <div><button onclick="goBack()" class="gobackbtn">Go Back</button></div>
+            <h2>Register</h2>
+            <label for="userType">Select User Type:</label>
+            <select id="userType" onchange="updateForm()" required>
+                <option value="" disabled selected>Select User Type</option>
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+            </select>
+            <p>Fill the following form to create an account: </p>
+            <hr>
+            <!-- Additional Fields for Student -->
+            <div id="studentFields" style="display: none;">
+                <label for="student_id"><b>Student ID</b></label>
+                <input type="text" placeholder="Enter Student ID" name="student_id" id="student_id">
+
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+    
+                <label for="psw-repeat"><b>Repeat Password</b></label>
+                <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
+    
+                <label for="email"><b>Email</b></label>
+                <input type="text" placeholder="Enter Email" name="email" id="email" required>
+    
+                <label for="phone"><b>Phone Number</b></label>
+                <input type="text" placeholder="Enter Phone Number" name="phone" id="phone" required>
+    
+                <label for="address"><b>Address</b></label>
+                <input type="text" placeholder="House #, Street #, Sub-Area, City" name="address" id="address" required>
+
+                <label for="student_name"><b>Student Name</b></label>
+                <input type="text" placeholder="Enter Student Name" name="student_name" id="student_name">
+
+                <label for="dietary_preferences"><b>Dietary Preferences</b></label>
+                <input type="text" placeholder="Enter Dietary Preferences" name="dietary_preferences" id="dietary_preferences">
+            </div>
+
+            <!-- Additional Fields for Teacher -->
+            <div id="teacherFields" style="display: none;">
+                <label for="teacher_id"><b>Teacher ID</b></label>
+                <input type="text" placeholder="Enter Teacher ID" name="teacher_id" id="teacher_id">
+
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+    
+                <label for="psw-repeat"><b>Repeat Password</b></label>
+                <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
+
+                <label for="teacher_name"><b>Teacher Name</b></label>
+                <input type="text" placeholder="Enter Teacher Name" name="teacher_name" id="teacher_name">
+
+                <label for="phone"><b>Phone Number</b></label>
+                <input type="text" placeholder="Enter Phone Number" name="phone" id="phone" required>
+            </div>
+
+            <hr>
+            <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+            <button type="button" class="registerbtn" onclick="validateAndRegister()">Register</button>
+        </div>
+        <div class="container signin">
+            <p>Already have an account? <a href="/login">Sign in</a>.</p>
+        </div>
+    </form>
+</body>
+</html>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: rgb(147, 56, 56);
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+    }
+
+    header {
+        background-color: rgb(128, 8, 8);
+        color: white;
+        text-align: center;
+        padding: 30px;
+        font-size: xx-large;
+        font-weight: bolder;
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+
+    form {
+        max-width: 400px;
+        margin: 20px auto;
+        background-color: rgb(247, 188, 179);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+
+    label {
+        display: block;
+        margin: 10px 0 5px;
+        color: #555;
+        font-weight: bold;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    button {
+        background-color: rgb(128, 8, 8);
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    button:hover {
+        background-color: #555;
+    }
+</style>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+
+    function updateForm() {
+        var userType = document.getElementById('userType').value;
+        var studentFields = document.getElementById('studentFields');
+        var teacherFields = document.getElementById('teacherFields');
+
+        if (userType === 'student') {
+            studentFields.style.display = 'block';
+            teacherFields.style.display = 'none';
+        } else if (userType === 'teacher') {
+            studentFields.style.display = 'none';
+            teacherFields.style.display = 'block';
+        } else {
+            studentFields.style.display = 'none';
+            teacherFields.style.display = 'none';
+        }
+    }
+
+</script>

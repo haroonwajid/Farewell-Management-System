@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="index.js"></script>
+    <title>WP | Menu Voting</title>
+</head>
+<body>
+    <header> Farewell Party </header>
+    <!-- Navigation Bar-->
+    <ul>
+        <li><a href="/main">Home</a></li>
+        <li class="dropdown">
+          <a href="javascript:void(0)" class="dropbtn">View</a>
+          <div class="dropdown-content">
+            <a href="/vote">Vote on Menu</a>
+            <!-- <a href="/diet">Dietary Preferences</a> -->
+            <!-- <a href="/family">Family</a> -->
+            <a href="/performance">Performance Proposal</a>
+          </div>
+        </li>
+        <li><a href="/ticket">Buy Ticket</a></li>
+        <li style="float:right" class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Account</a>
+            <div class="dropdown-content">
+                <a href="/editprofile">Edit Profile</a>
+                <a href="/login">Log out</a>
+            </div>
+        </li>
+    </ul>
+
+    <!-- Menu Suggestions Section -->
+    <div class="container">
+        <h2>Suggest Items for Dinner Menu</h2>
+
+        <!-- Form to suggest items -->
+        <form id="suggestionForm">
+            <label for="menuItem">Suggest an Item:</label>
+            <input type="text" id="menuItem" required>
+            <button type="button" onclick="suggestItem()">Submit Suggestion</button>
+        </form>
+
+        <!-- Display suggested items with voting mechanism -->
+        <div id="suggestedItems" class="menu-options"></div>
+
+        <button id="submitBtn" onclick="submitVote()">Submit Vote</button>
+        <p id="result"></p>
+    </div>
+
+    <style>
+        header {
+            background-color: rgb(89, 5, 5);
+            text-align: center;
+            padding: 30px;
+            font-size: xx-large;
+            font-weight: bolder;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: rgb(128, 8, 8);
+            font-family: Arial, sans-serif;
+        }
+
+        /* Navigation bar styles */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            background-color: rgb(147, 56, 56);
+        }
+
+        li {
+            float: left;
+        }
+
+        li a, .dropbtn {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover, .dropdown:hover .dropbtn {
+            background-color: #555;
+        }
+
+        li.dropdown {
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Menu options styles */
+        .container {
+            background-color: rgb(247, 188, 179);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .menu-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .menu-option {
+            padding: 10px;
+            background-color: rgb(219, 129, 129);
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu-option:hover {
+            background-color: rgb(201, 110, 110);
+        }
+
+        #submitBtn {
+            padding: 12px;
+            background-color: rgb(128, 8, 8);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        #submitBtn:hover {
+            background-color: rgb(108, 7, 7);
+        }
+        
+        /* Suggested items styles */
+        #suggestionForm {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #suggestedItems {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .suggested-item {
+            padding: 10px;
+            background-color: #ddd;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .suggested-item:hover {
+            background-color: #bbb;
+        }
+
+        .suggested-item img {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 5px;
+        }
+
+        .vote-count {
+            font-size: 14px;
+        }
+    </style>
+
+    <script>
+        let suggestedItems = [];
+
+        function suggestItem() {
+            const newItem = document.getElementById('menuItem').value.trim();
+            if (newItem !== '') {
+                suggestedItems.push({ name: newItem, votes: 0 });
+                updateSuggestedItems();
+                document.getElementById('menuItem').value = ''; // Clear input field
+            }
+        }
+
+        function voteForSuggestion(index) {
+            suggestedItems[index].votes++;
+            updateSuggestedItems();
+        }
+
+        function updateSuggestedItems() {
+            const suggestedItemsContainer = document.getElementById('suggestedItems');
+            suggestedItemsContainer.innerHTML = '';
+
+            suggestedItems.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'suggested-item';
+                itemElement.innerHTML = `
+                    <img src="placeholder_image.jpg" alt="${item.name}" width="100" height="100">
+                    <p>${item.name}</p>
+                    <button onclick="voteForSuggestion(${index})">Vote</button>
+                    <p class="vote-count">${item.votes} Votes</p>
+                `;
+                suggestedItemsContainer.appendChild(itemElement);
+            });
+        }
+    </script>
+</body>
+</html>

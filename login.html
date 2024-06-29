@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src ="index.js"></script>
+    <title>WP | Login</title>
+</head>
+<body>
+    <!-- Header -->
+    <header> Farewell Party </header>
+    <!-- Login Form -->
+    <form id="loginForm" action="/login" method="post">
+    <div class="container">
+        <h2>Login Form</h2>
+        <label for="username"><b>Username/ID</b></label>
+        <input type="text" placeholder="Enter Username" name="username" required>
+        <label for="password"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="password" required>
+        <button type="submit"><a href="/main">Login</a></button>
+        <label><input type="checkbox" checked="checked" name="remember"> Remember me</label>
+        <div><span class="signup"><a href="D:\sem 4\db\Project\register.html">Sign Up</a></span></div>
+    </div>
+    </form>
+</body>
+</html>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: rgb(147, 56, 56);
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background-color: rgb(128, 8, 8);
+        color: white;
+        text-align: center;
+        padding: 30px;
+        font-size: xx-large;
+        font-weight: bolder;
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+
+    form {
+        max-width: 400px;
+        margin: 20px auto;
+        background-color: rgb(247, 188, 179);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+        display: block;
+        margin: 10px 0 5px;
+        color: #555;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    button {
+        background-color: rgb(128, 8, 8);
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    button a {
+        text-decoration: none;
+        color: white;
+    }
+
+    button:hover {
+        background-color: #555;
+    }
+
+    input[type=checkbox] {
+        margin-top: 10px;
+    }
+
+    .signup {
+        display: block;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .signup a {
+        text-decoration: none;
+        color: #333;
+    }
+</style>
